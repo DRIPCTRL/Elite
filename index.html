@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DRIPCTRL — Control The Drip</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#000;
+    color:#fff;
+}
+
+/* NAVBAR */
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    height:68px;
+    background:rgba(0,0,0,.88);
+    backdrop-filter:blur(15px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    z-index:1000;
+    border-bottom:1px solid #1d1d1d;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:4px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:22px;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.nav-btn{
+    background:#fff;
+    color:#000;
+    border:none;
+    padding:10px 16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:120px 7% 70px;
+
+    background:
+    radial-gradient(circle at 80% 25%,#202020 0%,transparent 28%),
+    radial-gradient(circle at 20% 80%,#111 0%,transparent 30%),
+    #000;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.small-text{
+    color:#777;
+    font-size:11px;
+    letter-spacing:5px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:clamp(65px,15vw,155px);
+    line-height:.82;
+    letter-spacing:-8px;
+    font-weight:900;
+}
+
+.hero h1 span{
+    color:#555;
+}
+
+.hero p{
+    color:#999;
+    max-width:560px;
+    line-height:1.7;
+    margin:32px 0;
+    font-size:15px;
+}
+
+.shop-btn{
+    display:inline-block;
+    background:#fff;
+    color:#000;
+    padding:16px 27px;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+    transition:.3s;
+}
+
+.shop-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* MARQUEE */
+
+.banner{
+    border-top:1px solid #222;
+    border-bottom:1px solid #222;
+    padding:25px 0;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.banner-text{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:5px;
+}
+
+/* SECTIONS */
+
+section{
+    padding:100px 7%;
+}
+
+.section-title{
+    font-size:45px;
+    margin-bottom:12px;
+    letter-spacing:-2px;
+}
+
+.section-subtitle{
+    color:#777;
+    margin-bottom:45px;
+}
+
+/* COMING SOON */
+
+.drop-box{
+    min-height:430px;
+    border:1px solid #252525;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px;
+    background:
+    linear-gradient(135deg,#080808,#000);
+}
+
+.drop-content{
+    max-width:600px;
+}
+
+.drop-content h3{
+    font-size:clamp(40px,10vw,85px);
+    line-height:.9;
+    letter-spacing:-4px;
+    margin-bottom:25px;
+}
+
+.drop-content p{
+    color:#777;
+    line-height:1.7;
+    margin-bottom:30px;
+}
+
+.notify-btn{
+    display:inline-block;
+    padding:14px 24px;
+    background:#fff;
+    color:#000;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+/* ABOUT */
+
+.about{
+    background:#0b0b0b;
+    text-align:center;
+}
+
+.about h2{
+    font-size:clamp(40px,8vw,75px);
+    line-height:.95;
+    margin-bottom:25px;
+    letter-spacing:-3px;
+}
+
+.about p{
+    max-width:680px;
+    margin:auto;
+    color:#888;
+    line-height:1.8;
+}
+
+/* PAYMENT */
+
+.payment{
+    text-align:center;
+}
+
+.payment-box{
+    max-width:700px;
+    margin:auto;
+    border:1px solid #252525;
+    padding:45px 25px;
+}
+
+.payment-box h3{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.payment-box p{
+    color:#777;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.payment-btn{
+    display:inline-block;
+    padding:15px 25px;
+    background:#fff;
+    color:#000;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* FOOTER */
+
+footer{
+    padding:60px 7%;
+    border-top:1px solid #222;
+}
+
+.footer-logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:4px;
+    margin-bottom:12px;
+}
+
+footer p{
+    color:#666;
+}
+
+.socials{
+    margin:25px 0;
+}
+
+.socials a{
+    color:#fff;
+    text-decoration:none;
+    margin-right:20px;
+    font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+    nav{
+        padding:0 5%;
+    }
+
+    nav a{
+        display:none;
+    }
+
+    .hero{
+        min-height:92vh;
+        padding-left:6%;
+        padding-right:6%;
+    }
+
+    .hero h1{
+        font-size:65px;
+        letter-spacing:-5px;
+    }
+
+    section{
+        padding:75px 6%;
+    }
+
+    .section-title{
+        font-size:35px;
+    }
+
+    .drop-box{
+        min-height:380px;
+    }
+}
+
+@media(max-width:450px){
+
+    .hero h1{
+        font-size:55px;
+    }
+
+    .small-text{
+        letter-spacing:3px;
+    }
+
+    .banner-text{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+DRIPCTRL
+</div>
+
+<div>
+
+<a href="#drop">DROP</a>
+<a href="#about">ABOUT</a>
+<a href="#contact">CONTACT</a>
+
+<a class="nav-btn"
+href="https://wa.me/919812668851?text=Hey%20DRIPCTRL!%20I%20want%20to%20know%20more%20about%20the%20next%20drop."
+target="_blank">
+WHATSAPP
+</a>
+
+</div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="small-text">
+INDEPENDENT STREETWEAR / INDIA
+</div>
+
+<h1>
+CONTROL<br>
+<span>THE</span><br>
+DRIP.
+</h1>
+
+<p>
+Affordable streetwear for the next generation.
+Clean silhouettes. Bold identity. No unnecessary price tag.
+</p>
+
+<a href="#drop" class="shop-btn">
+EXPLORE DRIPCTRL →
+</a>
+
+</div>
+
+</section>
+
+
+<!-- BANNER -->
+
+<div class="banner">
+
+<div class="banner-text">
+DRIPCTRL • CONTROL THE DRIP • INDIA • DRIPCTRL • CONTROL THE DRIP • INDIA •
+</div>
+
+</div>
+
+
+<!-- DROP -->
+
+<section id="drop">
+
+<div class="small-text">
+DROP 01
+</div>
+
+<h2 class="section-title">
+COMING SOON.
+</h2>
+
+<p class="section-subtitle">
+The first DRIPCTRL collection is being built.
+</p>
+
+
+<div class="drop-box">
+
+<div class="drop-content">
+
+<h3>
+NO DROP.<br>
+YET.
+</h3>
+
+<p>
+We're working on the first DRIPCTRL collection.
+Follow us on Instagram and stay ready for the first release.
+</p>
+
+<a
+class="notify-btn"
+href="https://instagram.com/dripctrlwear"
+target="_blank">
+FOLLOW @DRIPCTRLWEAR
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+<div class="small-text">
+THE DRIPCTRL IDEA
+</div>
+
+<h2>
+STREETWEAR.<br>
+WITHOUT THE<br>
+STUPID PRICE.
+</h2>
+
+<p>
+DRIPCTRL is an independent Indian streetwear label built around one idea:
+you shouldn't need to spend crazy money to have elite style.
+
+Modern pieces.
+Strong identity.
+Affordable prices.
+
+CONTROL THE DRIP.
+</p>
+
+</section>
+
+
+<!-- PAYMENT -->
+
+<section class="payment">
+
+<div class="small-text">
+PAYMENT
+</div>
+
+<div class="payment-box">
+
+<h3>
+ONLINE ORDERS
+</h3>
+
+<p>
+Online payment will be available when Drop 01 launches.
+For now, contact us on WhatsApp for launch updates and ordering information.
+</p>
+
+<a
+class="payment-btn"
+href="https://wa.me/919812668851?text=Hey%20DRIPCTRL!%20I%20want%20to%20know%20when%20Drop%2001%20launches."
+target="_blank">
+CONTACT DRIPCTRL
+</a>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer id="contact">
+
+<div class="footer-logo">
+DRIPCTRL
+</div>
+
+<p>
+CONTROL THE DRIP.
+</p>
+
+<div class="socials">
+
+<a
+href="https://instagram.com/dripctrlwear"
+target="_blank">
+Instagram
+</a>
+
+<a
+href="https://wa.me/919812668851"
+target="_blank">
+WhatsApp
+</a>
+
+</div>
+
+<p>
+Shipping Pan India 🇮🇳
+</p>
+
+<br>
+
+<p>
+© 2026 DRIPCTRL. All rights reserved.
+</p>
+
+</footer>
+
+</body>
+  </html>
