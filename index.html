@@ -3,13 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>DRIPCTRL® — NO SIGNAL</title>
-
-<meta name="description" content="DRIPCTRL® — CONTROL THE DRIP. NO SIGNAL / DROP 01.">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="DRIPCTRL® — CONTROL THE DRIP. Drop 01: NO SIGNAL.">
+<title>DRIPCTRL® — CONTROL THE DRIP.</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+  --bg:#050505;
+  --panel:#0b0b0b;
+  --panel2:#101010;
+  --text:#f4f4f4;
+  --muted:#858585;
+  --line:#252525;
+  --soft:#151515;
+  --max:1250px;
+}
 
 *{
   margin:0;
@@ -22,10 +32,20 @@ html{
 }
 
 body{
-  background:#050505;
-  color:#f1f1f1;
+  background:var(--bg);
+  color:var(--text);
   font-family:Inter,Arial,sans-serif;
   overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.035;
+  z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
 
 a{
@@ -33,955 +53,1080 @@ a{
   text-decoration:none;
 }
 
-button,
-input,
-select{
-  font-family:inherit;
+button{
+  font:inherit;
 }
 
-::selection{
-  background:#fff;
-  color:#000;
+.container{
+  width:min(var(--max),90%);
+  margin:auto;
 }
 
+.section{
+  padding:120px 0;
+  border-top:1px solid var(--line);
+}
 
-/* ================= NAV ================= */
+.label{
+  color:#777;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
 
-nav{
-  position:sticky;
+/* NAV */
+
+.nav{
+  position:fixed;
   top:0;
+  left:0;
+  right:0;
   z-index:1000;
-  height:68px;
+  background:rgba(5,5,5,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.nav-inner{
+  height:72px;
+  width:min(var(--max),90%);
+  margin:auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 5%;
-  background:rgba(5,5,5,.92);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid #1f1f1f;
 }
 
 .logo{
-  font-size:19px;
+  font-size:18px;
   font-weight:900;
-  letter-spacing:2px;
-}
-
-.logo sup{
-  font-size:7px;
-  vertical-align:top;
-  margin-left:2px;
+  letter-spacing:.12em;
 }
 
 .nav-links{
   display:flex;
+  gap:30px;
   align-items:center;
-  gap:24px;
-  color:#888;
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:2px;
 }
 
 .nav-links a{
-  transition:.2s ease;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.16em;
+  color:#aaa;
+  transition:.25s;
 }
 
 .nav-links a:hover{
   color:#fff;
 }
 
-
-/* ================= HERO ================= */
-
-.hero{
-  min-height:88vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  border-bottom:1px solid #202020;
-  padding:70px 20px;
+.nav-ig{
+  border:1px solid #333;
+  padding:10px 14px;
 }
 
-.hero:before{
-  content:"✦";
+.menu{
+  display:none;
+  border:1px solid #333;
+  background:none;
+  color:#fff;
+  padding:9px 11px;
+  cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+  min-height:100svh;
+  position:relative;
+  display:flex;
+  align-items:flex-end;
+  overflow:hidden;
+  padding:150px 0 70px;
+}
+
+.hero-grid{
   position:absolute;
-  color:#0c0c0c;
-  font-size:420px;
-  line-height:1;
-  pointer-events:none;
+  inset:0;
+  opacity:.13;
+  background:
+    linear-gradient(#fff 1px,transparent 1px),
+    linear-gradient(90deg,#fff 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+
+.hero-glow{
+  position:absolute;
+  width:500px;
+  height:500px;
+  right:-200px;
+  top:10%;
+  border:1px solid #222;
+  border-radius:50%;
+  box-shadow:0 0 100px rgba(255,255,255,.025);
 }
 
 .hero-content{
   position:relative;
   z-index:2;
+  width:100%;
 }
 
-.hero-small{
+.hero-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.signal{
+  color:#777;
+  font-size:10px;
+  letter-spacing:.22em;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:8px;
   color:#777;
   font-size:9px;
-  letter-spacing:5px;
-  margin-bottom:28px;
+  letter-spacing:.18em;
+}
+
+.dot{
+  width:6px;
+  height:6px;
+  background:#fff;
+  border-radius:50%;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  50%{opacity:.25}
 }
 
 .hero h1{
-  font-size:clamp(58px,13vw,150px);
+  font-size:clamp(58px,11vw,155px);
   line-height:.82;
+  letter-spacing:-.075em;
   font-weight:900;
-  letter-spacing:-6px;
+  max-width:1100px;
 }
 
 .hero h1 span{
-  color:#555;
-}
-
-.hero-sub{
-  color:#666;
-  font-size:9px;
-  letter-spacing:4px;
-  margin-top:30px;
-}
-
-.hero-buttons{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:38px;
-}
-
-.btn{
-  display:inline-block;
-  padding:15px 24px;
-  border:1px solid #777;
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:2px;
-  transition:.25s ease;
-}
-
-.btn:hover{
-  background:#fff;
-  color:#000;
-}
-
-.btn.secondary{
-  border-color:#292929;
-  color:#888;
-}
-
-.btn.secondary:hover{
-  background:#111;
-  color:#fff;
-}
-
-
-/* ================= TICKER ================= */
-
-.ticker{
-  overflow:hidden;
-  white-space:nowrap;
-  border-top:1px solid #1c1c1c;
-  border-bottom:1px solid #1c1c1c;
-  padding:12px 0;
-  color:#555;
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:4px;
-}
-
-.ticker-track{
-  display:inline-block;
-  animation:scroll 28s linear infinite;
-}
-
-@keyframes scroll{
-  from{
-    transform:translateX(0);
-  }
-  to{
-    transform:translateX(-50%);
-  }
-}
-
-
-/* ================= GLOBAL ================= */
-
-.container{
-  width:min(1180px,90%);
-  margin:auto;
-}
-
-.section{
-  padding:105px 0;
-}
-
-.eyebrow{
-  color:#666;
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:4px;
-  margin-bottom:17px;
-}
-
-.section-title{
-  font-size:clamp(42px,7vw,78px);
-  line-height:.9;
-  letter-spacing:-4px;
-  font-weight:900;
-}
-
-.section-description{
-  max-width:650px;
-  color:#777;
-  font-size:13px;
-  line-height:1.9;
-  margin-top:25px;
-}
-
-
-/* ================= TAGS ================= */
-
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-top:28px;
-}
-
-.tag{
-  padding:8px 12px;
-  border:1px solid #292929;
-  color:#888;
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:1.4px;
-}
-
-
-/* ================= GALLERY ================= */
-
-.gallery{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  margin-top:60px;
-}
-
-.gallery-card{
-  position:relative;
-  overflow:hidden;
-  background:#0a0a0a;
-  border:1px solid #252525;
-}
-
-.gallery-card:before{
-  content:"DRIPCTRL / DROP 01";
-  position:absolute;
-  z-index:2;
-  top:13px;
-  left:14px;
-  color:#777;
-  font-size:7px;
-  letter-spacing:2px;
-}
-
-.gallery-card img{
   display:block;
-  width:100%;
-  transition:.5s ease;
+  color:#777;
 }
 
-.gallery-card:hover img{
-  transform:scale(1.02);
-}
-
-
-/* ================= PRODUCT ================= */
-
-.product-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:70px;
-  margin-top:65px;
-}
-
-.price{
-  font-size:46px;
-  font-weight:900;
-  letter-spacing:-2px;
-}
-
-.price-note{
-  color:#555;
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:2px;
-  margin-top:5px;
-}
-
-.info{
-  margin-top:32px;
-  border-top:1px solid #242424;
-}
-
-.info-row{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  padding:16px 0;
-  border-bottom:1px solid #242424;
-  font-size:11px;
-}
-
-.info-row span:first-child{
-  color:#555;
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:1.5px;
-}
-
-.info-row span:last-child{
-  color:#aaa;
-  text-align:right;
-}
-
-
-/* ================= SIZES ================= */
-
-.size-label{
-  color:#555;
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:3px;
-  margin-bottom:12px;
-}
-
-.sizes{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-}
-
-.size{
-  min-width:43px;
-  padding:11px 14px;
-  text-align:center;
-  border:1px solid #292929;
-  color:#999;
-  font-size:10px;
-  font-weight:700;
-}
-
-
-/* ================= ORDER ================= */
-
-.order-btn{
-  width:100%;
-  margin-top:30px;
-  padding:18px;
-  border:0;
-  background:#eee;
-  color:#050505;
-  cursor:pointer;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:2px;
-  transition:.25s ease;
-}
-
-.order-btn:hover{
-  background:#bbb;
-}
-
-
-/* ================= BUILT DIFFERENT ================= */
-
-.built-section{
-  background:#080808;
-  border-top:1px solid #202020;
-  border-bottom:1px solid #202020;
-}
-
-.built-header{
+.hero-bottom{
+  margin-top:55px;
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
   gap:30px;
 }
 
-.built-header-right{
-  max-width:390px;
+.hero-copy{
+  max-width:430px;
+  color:#858585;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.hero-copy strong{
+  color:#fff;
+}
+
+.hero-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  border:1px solid #444;
+  padding:16px 21px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.18em;
+  transition:.25s;
+}
+
+.hero-btn:hover{
+  background:#fff;
+  color:#000;
+}
+
+/* TICKER */
+
+.ticker{
+  overflow:hidden;
+  white-space:nowrap;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:16px 0;
+}
+
+.ticker-track{
+  display:inline-block;
+  animation:scroll 25s linear infinite;
+}
+
+.ticker span{
+  margin-right:55px;
   color:#666;
-  font-size:11px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.22em;
+}
+
+@keyframes scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* DROP */
+
+.drop-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+  margin-bottom:60px;
+}
+
+.drop-title{
+  font-size:clamp(48px,8vw,105px);
+  line-height:.88;
+  letter-spacing:-.06em;
+  font-weight:900;
+}
+
+.drop-title span{
+  color:#666;
+}
+
+.drop-meta{
+  text-align:right;
+  color:#777;
+  font-size:10px;
   line-height:1.8;
+  letter-spacing:.14em;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:25px;
+}
+
+.product-images{
+  display:grid;
+  gap:15px;
+}
+
+.product-images img{
+  width:100%;
+  display:block;
+  background:#111;
+}
+
+.product-info{
+  position:sticky;
+  top:100px;
+  height:max-content;
+  border:1px solid var(--line);
+  padding:30px;
+  background:#090909;
+}
+
+.product-name{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+
+.product-sub{
+  color:#777;
+  margin-top:8px;
+  font-size:11px;
+  letter-spacing:.13em;
+}
+
+.price{
+  font-size:25px;
+  font-weight:800;
+  margin:30px 0;
+}
+
+.product-description{
+  color:#999;
+  font-size:13px;
+  line-height:1.8;
+  padding-bottom:28px;
+  border-bottom:1px solid var(--line);
+}
+
+.specs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  margin:25px 0;
+  border-top:1px solid var(--line);
+  border-left:1px solid var(--line);
+}
+
+.spec{
+  padding:15px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+
+.spec small{
+  display:block;
+  color:#666;
+  font-size:8px;
+  letter-spacing:.16em;
+  margin-bottom:7px;
+}
+
+.spec strong{
+  font-size:11px;
+  letter-spacing:.06em;
+}
+
+.size-title{
+  font-size:9px;
+  color:#666;
+  font-weight:700;
+  letter-spacing:.18em;
+  margin-bottom:12px;
+}
+
+.sizes{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+}
+
+.size{
+  background:#0d0d0d;
+  border:1px solid #292929;
+  color:#aaa;
+  padding:12px 4px;
+  cursor:pointer;
+  font-size:10px;
+  transition:.2s;
+}
+
+.size:hover,
+.size.active{
+  background:#fff;
+  color:#000;
+  border-color:#fff;
+}
+
+.order{
+  width:100%;
+  border:0;
+  background:#fff;
+  color:#000;
+  padding:18px;
+  margin-top:20px;
+  cursor:pointer;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.2em;
+  transition:.25s;
+}
+
+.order:hover{
+  background:#ccc;
+}
+
+.shipping{
+  text-align:center;
+  color:#555;
+  font-size:9px;
+  letter-spacing:.13em;
+  margin-top:14px;
+}
+
+/* BUILT DIFFERENT */
+
+.built-title{
+  font-size:clamp(48px,9vw,115px);
+  line-height:.86;
+  letter-spacing:.12em;
+  font-weight:900;
+  margin:25px 0 65px;
+  text-transform:uppercase;
+}
+
+.built-title span{
+  color:#666;
 }
 
 .built-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:1px;
-  margin-top:65px;
-  border:1px solid #252525;
-  background:#252525;
+  border-top:1px solid var(--line);
+  border-left:1px solid var(--line);
 }
 
 .built-card{
-  min-height:230px;
-  padding:28px 23px;
-  background:#080808;
-  transition:.25s ease;
+  min-height:180px;
+  padding:24px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  transition:.3s;
 }
 
 .built-card:hover{
-  background:#0e0e0e;
+  background:#0d0d0d;
 }
 
-.built-number{
-  color:#444;
+.card-num{
+  color:#555;
   font-size:9px;
-  font-weight:800;
-  letter-spacing:2px;
-}
-
-.built-symbol{
-  color:#777;
-  font-family:Georgia,serif;
-  font-size:24px;
-  margin-top:25px;
+  letter-spacing:.15em;
 }
 
 .built-card h3{
-  margin-top:17px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1px;
+  margin-top:40px;
+  font-size:13px;
+  letter-spacing:.12em;
 }
 
 .built-card p{
-  color:#666;
-  font-size:10px;
-  line-height:1.8;
+  color:#777;
+  font-size:11px;
+  line-height:1.6;
   margin-top:10px;
 }
 
+/* START */
 
-/* ================= CONCEPT ================= */
-
-.concept-section{
-  background:#050505;
+.start{
+  text-align:center;
+  padding:150px 0;
+  position:relative;
+  overflow:hidden;
 }
 
+.start:before{
+  content:"01 / 04";
+  position:absolute;
+  font-size:clamp(150px,30vw,420px);
+  font-weight:900;
+  color:#090909;
+  letter-spacing:-.08em;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
+  z-index:-1;
+}
+
+.start h2{
+  font-size:clamp(55px,10vw,125px);
+  line-height:.85;
+  letter-spacing:-.07em;
+  font-weight:900;
+}
+
+.start h2 span{
+  color:#666;
+}
+
+.start p{
+  max-width:520px;
+  margin:30px auto 0;
+  color:#888;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.drop-list{
+  max-width:850px;
+  margin:60px auto 0;
+  text-align:left;
+}
+
+.drop-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:23px 0;
+  border-top:1px solid #222;
+}
+
+.drop-row:last-child{
+  border-bottom:1px solid #222;
+}
+
+.drop-row strong{
+  font-size:11px;
+  letter-spacing:.14em;
+}
+
+.drop-row span{
+  color:#555;
+  font-size:9px;
+  letter-spacing:.15em;
+}
+
+/* CONCEPT */
+
 .concept{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:90px;
+  min-height:70vh;
+  display:flex;
   align-items:center;
 }
 
-.concept-title{
-  font-size:clamp(45px,7vw,90px);
-  line-height:.84;
-  font-weight:900;
-  letter-spacing:-5px;
+.concept-inner{
+  width:100%;
 }
 
-.concept-title span{
+.concept h2{
+  max-width:1050px;
+  font-size:clamp(48px,9vw,120px);
+  line-height:.86;
+  letter-spacing:-.07em;
+}
+
+.concept h2 span{
   color:#555;
 }
 
 .concept-copy{
+  margin-top:45px;
+  max-width:500px;
   color:#777;
   font-size:13px;
-  line-height:2;
+  line-height:1.8;
 }
 
-.concept-copy strong{
-  color:#ddd;
-}
-
-
-/* ================= ABOUT ================= */
-
-.about-section{
-  background:#080808;
-  border-top:1px solid #202020;
-  border-bottom:1px solid #202020;
-}
+/* ABOUT */
 
 .about-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:90px;
-  align-items:center;
+  gap:80px;
 }
 
-.about-copy{
-  color:#777;
-  font-size:13px;
-  line-height:2;
+.about h2{
+  font-size:clamp(42px,7vw,80px);
+  line-height:.9;
+  letter-spacing:-.06em;
 }
 
-.about-copy strong{
-  color:#ddd;
+.about h2 span{
+  color:#666;
 }
 
+.about-text{
+  color:#888;
+  font-size:14px;
+  line-height:1.9;
+  max-width:550px;
+}
 
-/* ================= INSTAGRAM ================= */
+.about-text p+p{
+  margin-top:22px;
+}
+
+/* INSTAGRAM */
 
 .instagram{
   text-align:center;
 }
 
-.instagram-handle{
-  margin-top:8px;
-  font-size:clamp(35px,6vw,68px);
-  font-weight:900;
-  letter-spacing:-3px;
+.instagram h2{
+  font-size:clamp(45px,8vw,95px);
+  letter-spacing:-.07em;
+  line-height:.9;
 }
 
-.instagram-description{
-  max-width:520px;
-  margin:20px auto;
+.instagram h2 span{
   color:#666;
+}
+
+.instagram p{
+  color:#777;
+  margin:25px auto;
   font-size:12px;
-  line-height:1.8;
 }
 
-.instagram-btn{
+.ig-btn{
   display:inline-block;
-  margin-top:15px;
-  padding:15px 25px;
-  border:1px solid #777;
-  font-size:9px;
+  border:1px solid #444;
+  padding:16px 25px;
+  font-size:10px;
   font-weight:800;
-  letter-spacing:2px;
-  transition:.25s ease;
+  letter-spacing:.18em;
+  transition:.25s;
 }
 
-.instagram-btn:hover{
+.ig-btn:hover{
   background:#fff;
   color:#000;
 }
 
+/* FAQ */
 
-/* ================= FAQ ================= */
+.faq h2{
+  font-size:clamp(48px,8vw,100px);
+  line-height:.87;
+  letter-spacing:-.06em;
+  margin:25px 0 60px;
+}
 
-.faq-section{
-  border-top:1px solid #202020;
+.faq h2 span{
+  color:#666;
 }
 
 .faq-list{
-  margin-top:50px;
+  max-width:900px;
 }
 
-.faq-item{
-  padding:22px 0;
-  border-bottom:1px solid #222;
+.faq details{
+  border-top:1px solid #292929;
+  padding:25px 0;
 }
 
-.faq-question{
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1px;
+.faq details:last-child{
+  border-bottom:1px solid #292929;
 }
 
-.faq-answer{
-  color:#666;
-  font-size:11px;
-  line-height:1.8;
-  margin-top:9px;
-}
-
-
-/* ================= FOOTER ================= */
-
-footer{
+.faq summary{
+  list-style:none;
+  cursor:pointer;
   display:flex;
   justify-content:space-between;
-  gap:20px;
-  padding:35px 5%;
-  border-top:1px solid #242424;
-  color:#555;
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:1px;
+  gap:30px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.1em;
 }
 
+.faq summary::-webkit-details-marker{
+  display:none;
+}
 
-/* ================= MODAL ================= */
+.faq summary:after{
+  content:"+";
+  color:#666;
+  font-size:18px;
+}
+
+.faq details[open] summary:after{
+  content:"−";
+  color:#fff;
+}
+
+.faq p{
+  max-width:700px;
+  color:#777;
+  font-size:12px;
+  line-height:1.8;
+  margin-top:18px;
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid var(--line);
+  padding:45px 0;
+}
+
+.footer-top{
+  display:flex;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.footer-logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+
+.footer-links{
+  display:flex;
+  gap:25px;
+}
+
+.footer-links a{
+  color:#777;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.15em;
+}
+
+.footer-bottom{
+  margin-top:55px;
+  display:flex;
+  justify-content:space-between;
+  color:#444;
+  font-size:8px;
+  letter-spacing:.16em;
+}
+
+/* MODAL */
 
 .modal{
-  display:none;
   position:fixed;
   inset:0;
-  z-index:5000;
+  z-index:2000;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(12px);
+  display:none;
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:rgba(0,0,0,.9);
+}
+
+.modal.show{
+  display:flex;
 }
 
 .modal-box{
-  width:100%;
-  max-width:430px;
-  padding:30px;
-  background:#090909;
+  width:min(470px,100%);
+  background:#0b0b0b;
   border:1px solid #333;
+  padding:30px;
+  position:relative;
 }
 
-.modal-box h2{
-  font-size:26px;
-  font-weight:900;
-}
-
-.modal-sub{
-  color:#555;
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:2px;
-  margin:7px 0 25px;
-}
-
-.modal-box input,
-.modal-box select{
-  width:100%;
-  padding:14px;
-  margin-bottom:10px;
-  background:#111;
-  color:#eee;
-  border:1px solid #292929;
-  outline:none;
-}
-
-.modal-box input:focus,
-.modal-box select:focus{
-  border-color:#777;
-}
-
-.whatsapp-btn{
-  width:100%;
-  padding:16px;
+.close{
+  position:absolute;
+  right:18px;
+  top:15px;
   border:0;
-  background:#eee;
-  color:#000;
+  background:none;
+  color:#777;
+  font-size:22px;
   cursor:pointer;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:1px;
 }
 
-.close-btn{
+.modal-box h3{
+  font-size:25px;
+  letter-spacing:-.04em;
+}
+
+.modal-box p{
+  color:#777;
+  font-size:11px;
+  line-height:1.7;
+  margin:10px 0 25px;
+}
+
+.selected{
+  border:1px solid #333;
+  padding:15px;
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:.12em;
+}
+
+.whatsapp{
+  display:block;
   width:100%;
-  margin-top:9px;
-  padding:13px;
-  border:1px solid #292929;
-  background:transparent;
-  color:#666;
-  cursor:pointer;
-  font-size:9px;
+  text-align:center;
+  margin-top:12px;
+  padding:17px;
+  background:#fff;
+  color:#000;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.16em;
 }
 
-
-/* ================= MOBILE ================= */
+/* MOBILE */
 
 @media(max-width:800px){
 
-  nav{
-    height:60px;
+  .nav-inner{
+    height:64px;
   }
 
   .nav-links{
-    gap:12px;
-    font-size:7px;
+    display:none;
+    position:absolute;
+    top:64px;
+    left:0;
+    right:0;
+    background:#050505;
+    border-bottom:1px solid #222;
+    padding:25px 5%;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:22px;
+  }
+
+  .nav-links.open{
+    display:flex;
+  }
+
+  .menu{
+    display:block;
   }
 
   .hero{
-    min-height:82vh;
+    min-height:92svh;
+    padding-bottom:50px;
   }
 
   .hero h1{
-    letter-spacing:-4px;
+    font-size:clamp(54px,16vw,90px);
   }
 
-  .gallery{
-    grid-template-columns:1fr;
+  .hero-bottom{
+    flex-direction:column;
+    align-items:flex-start;
   }
 
   .product-grid{
     grid-template-columns:1fr;
-    gap:45px;
   }
 
-  .built-header{
-    display:block;
+  .product-info{
+    position:static;
   }
 
-  .built-header-right{
-    margin-top:25px;
+  .drop-header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .drop-meta{
+    text-align:left;
+  }
+
+  .built-title{
+    letter-spacing:.075em;
   }
 
   .built-grid{
     grid-template-columns:1fr 1fr;
   }
 
-  .concept,
+  .built-card{
+    min-height:160px;
+  }
+
   .about-grid{
     grid-template-columns:1fr;
-    gap:45px;
+    gap:40px;
   }
 
-  .section{
-    padding:80px 0;
+  .footer-top,
+  .footer-bottom{
+    flex-direction:column;
+    gap:25px;
   }
-
 }
 
-@media(max-width:520px){
+@media(max-width:480px){
 
-  .nav-links{
-    gap:9px;
-  }
-
-  .nav-links a:nth-child(2){
-    display:none;
-  }
-
-  .hero h1{
-    font-size:58px;
+  .section{
+    padding:90px 0;
   }
 
   .built-grid{
     grid-template-columns:1fr;
   }
 
-  footer{
-    flex-direction:column;
+  .built-title{
+    font-size:46px;
+    letter-spacing:.055em;
   }
 
-}
+  .sizes{
+    grid-template-columns:repeat(5,1fr);
+  }
 
+  .start{
+    padding:110px 0;
+  }
+
+  .footer-links{
+    flex-wrap:wrap;
+  }
+}
 </style>
 </head>
 
-
 <body>
 
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
 
-<!-- ================= NAV ================= -->
+    <a href="#top" class="logo">DRIPCTRL®</a>
 
-<nav>
+    <div class="nav-links" id="navLinks">
+      <a href="#drop">DROP 01</a>
+      <a href="#built">BUILT DIFFERENT</a>
+      <a href="#drops">DROPS</a>
+      <a href="#about">ABOUT</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://www.instagram.com/dripctrlwear/" target="_blank" class="nav-ig">IG ↗</a>
+    </div>
 
-  <a href="#" class="logo">
-    DRIPCTRL<sup>®</sup>
-  </a>
-
-  <div class="nav-links">
-
-    <a href="#drop">DROP 01</a>
-
-    <a href="#about">ABOUT</a>
-
-    <a href="#faq">FAQ</a>
-
-    <a
-      href="https://www.instagram.com/dripctrlwear/">
-      IG
-    </a>
+    <button class="menu" onclick="toggleMenu()">MENU</button>
 
   </div>
-
 </nav>
 
+<!-- HERO -->
+<header class="hero" id="top">
 
-<!-- ================= HERO ================= -->
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
 
-<section class="hero">
+  <div class="container hero-content">
 
-  <div class="hero-content">
+    <div class="hero-top">
+      <div class="signal">SYSTEM // DRIPCTRL®</div>
 
-    <div class="hero-small">
-      DRIPCTRL® / DROP 01 / TRANSMISSION 001
+      <div class="status">
+        <span class="dot"></span>
+        ONLINE
+      </div>
     </div>
 
     <h1>
-      NO<br>
-      <span>SIGNAL</span>
+      CONTROL
+      <span>THE DRIP.</span>
     </h1>
 
-    <div class="hero-sub">
-      CONNECTION LOST // 00:00
-    </div>
+    <div class="hero-bottom">
 
-    <div class="hero-buttons">
+      <p class="hero-copy">
+        <strong>DRIPCTRL®</strong> is an independent streetwear label
+        built around concepts, silhouettes and details that don't need
+        permission.
+        <br><br>
+        DROP 01 IS LIVE.
+      </p>
 
-      <a href="#drop" class="btn">
-        SHOP DROP 01
-      </a>
-
-      <a
-        href="https://www.instagram.com/dripctrlwear/"
-        class="btn secondary">
-        @DRIPCTRLWEAR
+      <a href="#drop" class="hero-btn">
+        ENTER DROP 01 →
       </a>
 
     </div>
 
   </div>
+</header>
 
-</section>
-
-
-<!-- ================= TICKER ================= -->
-
+<!-- TICKER -->
 <div class="ticker">
-
   <div class="ticker-track">
-
-    DRIPCTRL® ✦ CONTROL THE DRIP ✦ NO SIGNAL ✦ DROP 01 ✦
-    MADE TO ORDER ✦ DRIPCTRL® ✦ CONTROL THE DRIP ✦ NO SIGNAL ✦
-    DROP 01 ✦ MADE TO ORDER ✦
-
+    <span>DRIPCTRL®</span>
+    <span>CONTROL THE DRIP</span>
+    <span>NO SIGNAL</span>
+    <span>DROP 01 / 04</span>
+    <span>MADE TO ORDER</span>
+    <span>DRIPCTRL®</span>
+    <span>CONTROL THE DRIP</span>
+    <span>NO SIGNAL</span>
+    <span>DROP 01 / 04</span>
+    <span>MADE TO ORDER</span>
   </div>
-
 </div>
 
-
-<!-- ================= DROP 01 ================= -->
-
-<section id="drop" class="section">
+<!-- DROP 01 -->
+<section class="section" id="drop">
 
   <div class="container">
 
-    <div class="eyebrow">
-      DROP 01 / NO SIGNAL
-    </div>
+    <div class="drop-header">
 
-    <h2 class="section-title">
-      NO SIGNAL<br>
-      TEE
-    </h2>
+      <div>
+        <div class="label">DROP 01 / 04</div>
 
-    <p class="section-description">
-
-      The first release from DRIPCTRL.
-      A washed-black oversized tee built around static,
-      digital noise and the feeling of disconnecting
-      from everything for a moment.
-
-    </p>
-
-
-    <div class="tags">
-
-      <div class="tag">LIMITED DROP</div>
-      <div class="tag">240 GSM</div>
-      <div class="tag">OVERSIZED</div>
-      <div class="tag">WASHED BLACK</div>
-      <div class="tag">MADE TO ORDER</div>
-      <div class="tag">PAN-INDIA</div>
-
-    </div>
-
-
-    <!-- EXISTING MOCKUPS -->
-
-    <div class="gallery">
-
-      <div class="gallery-card">
-
-        <img
-          src="no-signal-mockup-01.png"
-          alt="DRIPCTRL NO SIGNAL Tee mockup">
-
+        <h2 class="drop-title">
+          NO<br>
+          <span>SIGNAL.</span>
+        </h2>
       </div>
 
-
-      <div class="gallery-card">
-
-        <img
-          src="no-signal-mockup-02.png"
-          alt="DRIPCTRL NO SIGNAL Tee product details">
-
+      <div class="drop-meta">
+        LIMITED CONCEPT DROP<br>
+        OVERSIZED FIT<br>
+        INDIA / 2026
       </div>
 
     </div>
-
-
-    <!-- PRODUCT INFO -->
 
     <div class="product-grid">
 
-      <div>
-
-        <div class="price">
-          ₹799
-        </div>
-
-        <div class="price-note">
-          MADE TO ORDER / PAN-INDIA
-        </div>
-
-
-        <div class="info">
-
-          <div class="info-row">
-            <span>Fabric</span>
-            <span>240 GSM Cotton</span>
-          </div>
-
-          <div class="info-row">
-            <span>Fit</span>
-            <span>Oversized / Drop Shoulder</span>
-          </div>
-
-          <div class="info-row">
-            <span>Color</span>
-            <span>Washed Black</span>
-          </div>
-
-          <div class="info-row">
-            <span>Graphics</span>
-            <span>Front + Back</span>
-          </div>
-
-          <div class="info-row">
-            <span>Production</span>
-            <span>Made To Order</span>
-          </div>
-
-        </div>
-
+      <div class="product-images">
+        <img src="no-signal-mockup-01.png" alt="DRIPCTRL NO SIGNAL Tee">
+        <img src="no-signal-mockup-02.png" alt="DRIPCTRL NO SIGNAL Tee details">
       </div>
 
+      <div class="product-info">
 
-      <div>
+        <div class="label">DRIPCTRL® / DROP 01</div>
 
-        <div class="size-label">
-          SELECT SIZE
+        <h3 class="product-name">NO SIGNAL TEE</h3>
+
+        <div class="product-sub">
+          CONNECTION LOST // 00:00
         </div>
+
+        <div class="price">₹799</div>
+
+        <p class="product-description">
+          A heavyweight oversized silhouette built around the idea of
+          disconnecting from everything that doesn't matter.
+          Washed black. Distressed graphics. Technical details.
+          Nothing unnecessary.
+        </p>
+
+        <div class="specs">
+
+          <div class="spec">
+            <small>WEIGHT</small>
+            <strong>240 GSM</strong>
+          </div>
+
+          <div class="spec">
+            <small>FIT</small>
+            <strong>OVERSIZED</strong>
+          </div>
+
+          <div class="spec">
+            <small>SHOULDER</small>
+            <strong>DROP</strong>
+          </div>
+
+          <div class="spec">
+            <small>COLOUR</small>
+            <strong>WASHED BLACK</strong>
+          </div>
+
+        </div>
+
+        <div class="size-title">SELECT SIZE</div>
 
         <div class="sizes">
-
-          <div class="size">S</div>
-          <div class="size">M</div>
-          <div class="size">L</div>
-          <div class="size">XL</div>
-          <div class="size">XXL</div>
-
+          <button class="size" onclick="selectSize(this)">S</button>
+          <button class="size" onclick="selectSize(this)">M</button>
+          <button class="size" onclick="selectSize(this)">L</button>
+          <button class="size" onclick="selectSize(this)">XL</button>
+          <button class="size" onclick="selectSize(this)">XXL</button>
         </div>
 
-
-        <button
-          class="order-btn"
-          onclick="openOrder()">
-
-          ORDER NO SIGNAL — ₹799
-
+        <button class="order" onclick="openModal()">
+          ORDER NO SIGNAL →
         </button>
+
+        <div class="shipping">
+          PAN-INDIA SHIPPING // MADE TO ORDER
+        </div>
 
       </div>
 
@@ -991,232 +1136,66 @@ footer{
 
 </section>
 
-
-<!-- ================= BUILT DIFFERENT ================= -->
-
-<section class="section built-section">
+<!-- BUILT DIFFERENT -->
+<section class="section" id="built">
 
   <div class="container">
 
-    <div class="built-header">
+    <div class="label">02 // THE DETAILS</div>
 
-      <div>
-
-        <div class="eyebrow">
-          002 / PRODUCT SPECIFICATION
-        </div>
-
-        <h2 class="section-title">
-          BUILT<br>
-          DIFFERENT.
-        </h2>
-
-      </div>
-
-
-      <div class="built-header-right">
-
-        Every detail of the NO SIGNAL TEE is designed
-        around the DRIPCTRL silhouette — from the fabric
-        weight and wash to the graphics, labels and finish.
-
-      </div>
-
-    </div>
-
+    <h2 class="built-title">
+      BUILT<br>
+      <span>DIFFERENT.</span>
+    </h2>
 
     <div class="built-grid">
 
-
-      <!-- 01 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          01 / FABRIC
-        </div>
-
-        <div class="built-symbol">
-          ✦
-        </div>
-
-        <h3>
-          240 GSM COTTON
-        </h3>
-
-        <p>
-          A heavier cotton construction designed to give
-          the tee a substantial premium streetwear feel.
-        </p>
-
+        <div class="card-num">01</div>
+        <h3>FABRIC</h3>
+        <p>Heavyweight 240 GSM construction designed for structure and presence.</p>
       </div>
 
-
-      <!-- 02 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          02 / SILHOUETTE
-        </div>
-
-        <div class="built-symbol">
-          ◇
-        </div>
-
-        <h3>
-          OVERSIZED CUT
-        </h3>
-
-        <p>
-          Relaxed proportions with a drop shoulder,
-          wider body and oversized streetwear shape.
-        </p>
-
+        <div class="card-num">02</div>
+        <h3>SILHOUETTE</h3>
+        <p>Oversized proportions with a relaxed drop-shoulder profile.</p>
       </div>
 
-
-      <!-- 03 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          03 / WASH
-        </div>
-
-        <div class="built-symbol">
-          ◐
-        </div>
-
-        <h3>
-          WASHED BLACK
-        </h3>
-
-        <p>
-          A controlled washed-black finish with subtle
-          vintage variation instead of a flat solid black.
-        </p>
-
+        <div class="card-num">03</div>
+        <h3>WASH</h3>
+        <p>Washed black finish with controlled vintage character.</p>
       </div>
 
-
-      <!-- 04 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          04 / GRAPHICS
-        </div>
-
-        <div class="built-symbol">
-          ✧
-        </div>
-
-        <h3>
-          STATIC GRAPHICS
-        </h3>
-
-        <p>
-          Distressed monochrome artwork built around
-          signal loss, digital noise and technical imagery.
-        </p>
-
+        <div class="card-num">04</div>
+        <h3>GRAPHICS</h3>
+        <p>Concept-driven graphics instead of simply putting a logo everywhere.</p>
       </div>
 
-
-      <!-- 05 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          05 / PRINT
-        </div>
-
-        <div class="built-symbol">
-          †
-        </div>
-
-        <h3>
-          DETAILED PRINT
-        </h3>
-
-        <p>
-          Fine technical text, glitch details and
-          distressed elements designed for clean reproduction.
-        </p>
-
+        <div class="card-num">05</div>
+        <h3>PRINT</h3>
+        <p>Detailed monochrome artwork with distressed technical elements.</p>
       </div>
 
-
-      <!-- 06 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          06 / CONSTRUCTION
-        </div>
-
-        <div class="built-symbol">
-          ⟐
-        </div>
-
-        <h3>
-          CLEAN FINISHING
-        </h3>
-
-        <p>
-          Ribbed crew neck, straight hem, reinforced
-          stitching and consistent garment finishing.
-        </p>
-
+        <div class="card-num">06</div>
+        <h3>CONSTRUCTION</h3>
+        <p>Clean finishing and a silhouette designed to actually wear well.</p>
       </div>
 
-
-      <!-- 07 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          07 / LABELS
-        </div>
-
-        <div class="built-symbol">
-          ⊹
-        </div>
-
-        <h3>
-          DRIPCTRL DETAILS
-        </h3>
-
-        <p>
-          Custom DRIPCTRL neck label, hem label and
-          care/composition branding for a complete finish.
-        </p>
-
+        <div class="card-num">07</div>
+        <h3>LABELS</h3>
+        <p>DRIPCTRL branding details keep the garment feeling like a real label.</p>
       </div>
 
-
-      <!-- 08 -->
-
       <div class="built-card">
-
-        <div class="built-number">
-          08 / PRODUCTION
-        </div>
-
-        <div class="built-symbol">
-          ∴
-        </div>
-
-        <h3>
-          MADE TO ORDER
-        </h3>
-
-        <p>
-          Produced after purchase to reduce unnecessary
-          inventory and keep every piece intentional.
-        </p>
-
+        <div class="card-num">08</div>
+        <h3>PRODUCTION</h3>
+        <p>Made to order so the first drop doesn't depend on unnecessary stock.</p>
       </div>
 
     </div>
@@ -1225,115 +1204,32 @@ footer{
 
 </section>
 
-
-<!-- ================= CONCEPT ================= -->
-
-<section class="section concept-section">
+<!-- ONLY THE START -->
+<section class="start" id="drops">
 
   <div class="container">
 
-    <div class="concept">
+    <div class="label">03 // THE ROADMAP</div>
 
-      <div class="concept-title">
+    <h2>
+      THIS IS<br>
+      <span>ONLY THE START.</span>
+    </h2>
 
-        OFFLINE.<br>
-        UNBOTHERED.<br>
-        <span>NO SIGNAL.</span>
+    <p>
+      NO SIGNAL is only the first chapter.
+      Four drops. Four concepts.
+      One identity.
+      More DRIPCTRL is already on the way.
+    </p>
 
+    <div class="drop-list">
+
+      <div class="drop-row">
+        <strong>DROP 01 — NO SIGNAL</strong>
+        <span>LIVE / 2026</span>
       </div>
 
-
-      <div class="concept-copy">
-
-        <p>
-          <strong>NO SIGNAL</strong> is more than a graphic.
-          It's the idea behind Drop 01.
-        </p>
-
-        <br>
-
-        <p>
-          Static. Distortion. Dead frequencies.
-          The moment you step away from the endless
-          digital noise around you.
-        </p>
-
-        <br>
-
-        <p>
-          DRIPCTRL turns that feeling into clothing.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= ABOUT ================= -->
-
-<section id="about" class="section about-section">
-
-  <div class="container">
-
-    <div class="about-grid">
-
-      <div>
-
-        <div class="eyebrow">
-          003 / THE LABEL
-        </div>
-
-        <h2 class="section-title">
-          CONTROL<br>
-          THE DRIP.
-        </h2>
-
-      </div>
-
-
-      <div class="about-copy">
-
-        <p>
-
-          <strong>DRIPCTRL®</strong> is an independent
-          streetwear label built around bold graphics,
-          oversized silhouettes and modern underground
-          aesthetics.
-
-        </p>
-
-        <br>
-
-        <p>
-
-          No generic logo tees.
-          No forced trends.
-          Just pieces designed to feel like
-          they belong to their own world.
-
-        </p>
-
-        <br>
-
-        <p>
-          <strong>CONTROL THE DRIP.</strong>
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= INSTAGRAM ================= -->
-
-<section class="section instagram">
-
-  <div class="contain
+      <div class="drop-row">
+        <strong>DROP 02</strong>
+   
