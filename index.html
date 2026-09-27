@@ -2,63 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#050505">
-<meta name="description" content="DRIPCTRL® — CONTROL THE DRIP. Drop 01: NO SIGNAL.">
 <title>DRIPCTRL® — CONTROL THE DRIP.</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#050505;
+  color:#f4f4f4;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+body.menu-open{overflow:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
 
 :root{
   --bg:#050505;
-  --panel:#0b0b0b;
-  --panel2:#101010;
-  --text:#f4f4f4;
-  --muted:#858585;
-  --line:#252525;
-  --soft:#151515;
-  --max:1250px;
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,Arial,sans-serif;
-  overflow-x:hidden;
-}
-
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.035;
-  z-index:9999;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-button{
-  font:inherit;
+  --card:#0b0b0b;
+  --line:#262626;
+  --muted:#777;
+  --dim:#444;
+  --white:#f5f5f5;
 }
 
 .container{
-  width:min(var(--max),90%);
+  width:min(1200px,90%);
   margin:auto;
 }
 
@@ -68,29 +39,30 @@ button{
 }
 
 .label{
-  color:#777;
-  font-size:10px;
+  color:#666;
+  font-size:9px;
   font-weight:700;
-  letter-spacing:.22em;
+  letter-spacing:.25em;
   text-transform:uppercase;
 }
 
-/* NAV */
+/* ================= NAV ================= */
 
 .nav{
   position:fixed;
   top:0;
   left:0;
   right:0;
-  z-index:1000;
-  background:rgba(5,5,5,.82);
+  z-index:999;
+  height:72px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(5,5,5,.78);
   backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .nav-inner{
-  height:72px;
-  width:min(var(--max),90%);
+  height:100%;
+  width:min(1200px,90%);
   margin:auto;
   display:flex;
   align-items:center;
@@ -98,131 +70,234 @@ button{
 }
 
 .logo{
-  font-size:18px;
+  font-size:17px;
   font-weight:900;
-  letter-spacing:.12em;
+  letter-spacing:.13em;
 }
 
-.nav-links{
+.desktop-links{
   display:flex;
-  gap:30px;
+  gap:28px;
   align-items:center;
 }
 
-.nav-links a{
-  font-size:10px;
+.desktop-links a{
+  color:#888;
+  font-size:9px;
   font-weight:700;
   letter-spacing:.16em;
-  color:#aaa;
   transition:.25s;
 }
 
-.nav-links a:hover{
-  color:#fff;
-}
+.desktop-links a:hover{color:white}
 
-.nav-ig{
-  border:1px solid #333;
-  padding:10px 14px;
-}
-
-.menu{
+.menu-trigger{
   display:none;
+  position:relative;
+  width:82px;
+  height:40px;
   border:1px solid #333;
-  background:none;
-  color:#fff;
-  padding:9px 11px;
+  background:#080808;
+  color:white;
   cursor:pointer;
+  overflow:hidden;
 }
 
-/* HERO */
+.menu-trigger span{
+  position:absolute;
+  left:13px;
+  font-size:8px;
+  letter-spacing:.18em;
+  font-weight:800;
+  transition:.3s;
+}
+
+.menu-word{top:8px}
+.menu-icon{bottom:7px;font-size:10px!important}
+
+.menu-trigger:hover{
+  border-color:#777;
+}
+
+/* ================= FULLSCREEN MENU ================= */
+
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  z-index:998;
+  background:#050505;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .35s ease,visibility .35s ease;
+  overflow:hidden;
+}
+
+.mobile-menu.open{
+  visibility:visible;
+  opacity:1;
+  pointer-events:auto;
+}
+
+.menu-bg-number{
+  position:absolute;
+  right:-4vw;
+  bottom:-9vw;
+  font-size:42vw;
+  line-height:.7;
+  font-weight:900;
+  letter-spacing:-.1em;
+  color:#0c0c0c;
+  pointer-events:none;
+}
+
+.gothic{
+  font-family:Georgia,"Times New Roman",serif;
+}
+
+.menu-symbol{
+  position:absolute;
+  color:#252525;
+  font-size:60px;
+}
+
+.sym1{top:17%;right:12%}
+.sym2{bottom:20%;left:8%}
+.sym3{top:40%;left:4%}
+
+.menu-inner{
+  width:min(1200px,90%);
+  height:100%;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+}
+
+.menu-top{
+  position:absolute;
+  top:95px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  color:#555;
+  font-size:8px;
+  letter-spacing:.2em;
+}
+
+.menu-links{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.menu-link{
+  display:flex;
+  align-items:baseline;
+  gap:20px;
+  padding:5px 0;
+  color:#ddd;
+  font-size:clamp(38px,8vw,90px);
+  line-height:.95;
+  font-weight:900;
+  letter-spacing:-.06em;
+  transition:.3s;
+}
+
+.menu-link small{
+  color:#444;
+  font-size:9px;
+  letter-spacing:.2em;
+  font-weight:700;
+}
+
+.menu-link:hover{
+  color:#777;
+  transform:translateX(10px);
+}
+
+.menu-bottom{
+  position:absolute;
+  bottom:35px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  color:#555;
+  font-size:8px;
+  letter-spacing:.2em;
+}
+
+/* ================= HERO ================= */
 
 .hero{
+  min-height:100vh;
   min-height:100svh;
-  position:relative;
   display:flex;
   align-items:flex-end;
-  overflow:hidden;
   padding:150px 0 70px;
+  position:relative;
+  overflow:hidden;
 }
 
-.hero-grid{
+.grid{
   position:absolute;
   inset:0;
-  opacity:.13;
+  opacity:.11;
   background:
     linear-gradient(#fff 1px,transparent 1px),
     linear-gradient(90deg,#fff 1px,transparent 1px);
   background-size:70px 70px;
-  mask-image:linear-gradient(to bottom,black,transparent 85%);
+  mask-image:linear-gradient(to bottom,black,transparent);
 }
 
-.hero-glow{
+.hero-circle{
   position:absolute;
-  width:500px;
-  height:500px;
-  right:-200px;
+  width:650px;
+  height:650px;
+  right:-250px;
   top:10%;
-  border:1px solid #222;
+  border:1px solid #1b1b1b;
   border-radius:50%;
-  box-shadow:0 0 100px rgba(255,255,255,.025);
 }
 
-.hero-content{
-  position:relative;
-  z-index:2;
-  width:100%;
-}
+.hero-content{position:relative;z-index:2;width:100%}
 
-.hero-top{
+.hero-meta{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
+  color:#555;
+  font-size:9px;
+  letter-spacing:.2em;
+  margin-bottom:28px;
 }
 
-.signal{
-  color:#777;
-  font-size:10px;
-  letter-spacing:.22em;
-}
-
-.status{
+.live{
   display:flex;
   align-items:center;
-  gap:8px;
-  color:#777;
-  font-size:9px;
-  letter-spacing:.18em;
+  gap:7px;
 }
 
-.dot{
-  width:6px;
-  height:6px;
+.live i{
+  width:5px;
+  height:5px;
   background:#fff;
   border-radius:50%;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  50%{opacity:.25}
 }
 
 .hero h1{
-  font-size:clamp(58px,11vw,155px);
-  line-height:.82;
-  letter-spacing:-.075em;
+  font-size:clamp(60px,11vw,150px);
   font-weight:900;
-  max-width:1100px;
+  letter-spacing:-.08em;
+  line-height:.8;
 }
 
-.hero h1 span{
-  display:block;
-  color:#777;
-}
+.hero h1 span{color:#666}
 
 .hero-bottom{
-  margin-top:55px;
+  margin-top:60px;
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
@@ -230,127 +305,120 @@ button{
 }
 
 .hero-copy{
+  color:#777;
   max-width:430px;
-  color:#858585;
-  font-size:13px;
-  line-height:1.7;
+  font-size:12px;
+  line-height:1.8;
 }
 
-.hero-copy strong{
-  color:#fff;
-}
+.hero-copy strong{color:white}
 
-.hero-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:14px;
+.hero-button{
   border:1px solid #444;
-  padding:16px 21px;
-  font-size:10px;
+  padding:17px 22px;
+  font-size:9px;
   font-weight:800;
-  letter-spacing:.18em;
+  letter-spacing:.2em;
   transition:.25s;
 }
 
-.hero-btn:hover{
-  background:#fff;
-  color:#000;
+.hero-button:hover{
+  background:white;
+  color:black;
 }
 
-/* TICKER */
+/* ================= TICKER ================= */
 
 .ticker{
-  overflow:hidden;
-  white-space:nowrap;
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
-  padding:16px 0;
+  overflow:hidden;
+  white-space:nowrap;
+  padding:15px 0;
 }
 
 .ticker-track{
-  display:inline-block;
-  animation:scroll 25s linear infinite;
+  width:max-content;
+  animation:ticker 28s linear infinite;
 }
 
 .ticker span{
-  margin-right:55px;
-  color:#666;
-  font-size:10px;
+  margin-right:60px;
+  color:#555;
+  font-size:9px;
   font-weight:700;
-  letter-spacing:.22em;
+  letter-spacing:.2em;
 }
 
-@keyframes scroll{
-  from{transform:translateX(0)}
+@keyframes ticker{
   to{transform:translateX(-50%)}
 }
 
-/* DROP */
+/* ================= DROP 01 ================= */
 
-.drop-header{
+.drop-head{
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
-  gap:30px;
   margin-bottom:60px;
+  gap:30px;
 }
 
 .drop-title{
-  font-size:clamp(48px,8vw,105px);
-  line-height:.88;
-  letter-spacing:-.06em;
+  margin-top:22px;
+  font-size:clamp(55px,9vw,115px);
   font-weight:900;
+  letter-spacing:-.07em;
+  line-height:.8;
 }
 
-.drop-title span{
-  color:#666;
-}
+.drop-title span{color:#666}
 
-.drop-meta{
+.drop-status{
   text-align:right;
-  color:#777;
-  font-size:10px;
+  color:#666;
+  font-size:9px;
   line-height:1.8;
-  letter-spacing:.14em;
+  letter-spacing:.18em;
 }
 
-.product-grid{
+.product{
   display:grid;
   grid-template-columns:1.25fr .75fr;
-  gap:25px;
+  gap:20px;
 }
 
-.product-images{
+.images{
   display:grid;
   gap:15px;
 }
 
-.product-images img{
-  width:100%;
+.images img{
   display:block;
+  width:100%;
   background:#111;
 }
 
 .product-info{
-  position:sticky;
-  top:100px;
-  height:max-content;
+  background:#090909;
   border:1px solid var(--line);
   padding:30px;
-  background:#090909;
+  height:max-content;
+  position:sticky;
+  top:95px;
 }
 
 .product-name{
-  font-size:28px;
+  font-size:27px;
   font-weight:900;
-  letter-spacing:-.04em;
+  margin-top:8px;
 }
 
 .product-sub{
-  color:#777;
-  margin-top:8px;
-  font-size:11px;
-  letter-spacing:.13em;
+  color:#666;
+  font-size:9px;
+  letter-spacing:.15em;
+  margin-top:7px;
 }
 
 .price{
@@ -359,380 +427,382 @@ button{
   margin:30px 0;
 }
 
-.product-description{
-  color:#999;
-  font-size:13px;
+.desc{
+  color:#888;
+  font-size:12px;
   line-height:1.8;
-  padding-bottom:28px;
   border-bottom:1px solid var(--line);
+  padding-bottom:25px;
 }
 
 .specs{
   display:grid;
   grid-template-columns:1fr 1fr;
-  margin:25px 0;
   border-top:1px solid var(--line);
   border-left:1px solid var(--line);
+  margin:25px 0;
 }
 
 .spec{
-  padding:15px;
+  padding:14px;
   border-right:1px solid var(--line);
   border-bottom:1px solid var(--line);
 }
 
 .spec small{
   display:block;
-  color:#666;
-  font-size:8px;
-  letter-spacing:.16em;
-  margin-bottom:7px;
+  color:#555;
+  font-size:7px;
+  letter-spacing:.17em;
+  margin-bottom:6px;
 }
 
 .spec strong{
-  font-size:11px;
-  letter-spacing:.06em;
+  font-size:10px;
+  letter-spacing:.08em;
 }
 
-.size-title{
-  font-size:9px;
-  color:#666;
+.size-label{
+  color:#555;
+  font-size:8px;
   font-weight:700;
-  letter-spacing:.18em;
-  margin-bottom:12px;
+  letter-spacing:.2em;
+  margin-bottom:10px;
 }
 
 .sizes{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:6px;
+  gap:5px;
 }
 
 .size{
-  background:#0d0d0d;
   border:1px solid #292929;
-  color:#aaa;
-  padding:12px 4px;
+  background:#0c0c0c;
+  color:#888;
+  padding:12px 3px;
   cursor:pointer;
-  font-size:10px;
-  transition:.2s;
 }
 
-.size:hover,
-.size.active{
-  background:#fff;
-  color:#000;
-  border-color:#fff;
+.size.active,
+.size:hover{
+  color:black;
+  background:white;
+  border-color:white;
 }
 
 .order{
   width:100%;
+  margin-top:18px;
   border:0;
-  background:#fff;
-  color:#000;
+  background:white;
+  color:black;
   padding:18px;
-  margin-top:20px;
-  cursor:pointer;
-  font-size:10px;
+  font-size:9px;
   font-weight:900;
   letter-spacing:.2em;
-  transition:.25s;
-}
-
-.order:hover{
-  background:#ccc;
+  cursor:pointer;
 }
 
 .shipping{
   text-align:center;
-  color:#555;
-  font-size:9px;
-  letter-spacing:.13em;
-  margin-top:14px;
+  color:#444;
+  font-size:8px;
+  letter-spacing:.15em;
+  margin-top:12px;
 }
 
-/* BUILT DIFFERENT */
+/* ================= BUILT DIFFERENT ================= */
+
+.built-heading{
+  position:relative;
+  margin:25px 0 60px;
+}
+
+.built-symbol{
+  position:absolute;
+  right:5%;
+  top:-20px;
+  font-family:Georgia,serif;
+  font-size:100px;
+  color:#171717;
+  line-height:1;
+}
 
 .built-title{
-  font-size:clamp(48px,9vw,115px);
-  line-height:.86;
-  letter-spacing:.12em;
+  font-size:clamp(50px,9vw,115px);
+  line-height:.82;
   font-weight:900;
-  margin:25px 0 65px;
-  text-transform:uppercase;
+  letter-spacing:.12em;
 }
 
-.built-title span{
+.built-title span{color:#666}
+
+.built-sub{
+  margin-top:25px;
+  max-width:500px;
   color:#666;
+  font-size:11px;
+  line-height:1.7;
 }
 
 .built-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  border-top:1px solid var(--line);
   border-left:1px solid var(--line);
+  border-top:1px solid var(--line);
 }
 
 .built-card{
-  min-height:180px;
-  padding:24px;
+  position:relative;
+  min-height:190px;
+  padding:25px;
   border-right:1px solid var(--line);
   border-bottom:1px solid var(--line);
+  overflow:hidden;
   transition:.3s;
 }
 
-.built-card:hover{
-  background:#0d0d0d;
+.built-card:hover{background:#0c0c0c}
+
+.card-gothic{
+  position:absolute;
+  right:15px;
+  top:8px;
+  color:#242424;
+  font-family:Georgia,serif;
+  font-size:55px;
 }
 
 .card-num{
   color:#555;
-  font-size:9px;
-  letter-spacing:.15em;
+  font-size:8px;
+  letter-spacing:.18em;
 }
 
 .built-card h3{
-  margin-top:40px;
-  font-size:13px;
-  letter-spacing:.12em;
+  margin-top:42px;
+  font-size:11px;
+  letter-spacing:.16em;
 }
 
 .built-card p{
-  color:#777;
-  font-size:11px;
-  line-height:1.6;
   margin-top:10px;
+  color:#666;
+  font-size:10px;
+  line-height:1.7;
 }
 
-/* START */
+/* ================= FOUR DROPS ================= */
 
-.start{
-  text-align:center;
-  padding:150px 0;
+.drops-section{
   position:relative;
   overflow:hidden;
 }
 
-.start:before{
-  content:"01 / 04";
-  position:absolute;
-  font-size:clamp(150px,30vw,420px);
-  font-weight:900;
-  color:#090909;
-  letter-spacing:-.08em;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  white-space:nowrap;
-  z-index:-1;
-}
-
-.start h2{
+.drops-title{
   font-size:clamp(55px,10vw,125px);
-  line-height:.85;
+  line-height:.82;
   letter-spacing:-.07em;
   font-weight:900;
+  margin:25px 0 30px;
 }
 
-.start h2 span{
-  color:#666;
-}
+.drops-title span{color:#666}
 
-.start p{
+.drops-intro{
   max-width:520px;
-  margin:30px auto 0;
-  color:#888;
-  font-size:13px;
+  color:#777;
+  font-size:12px;
   line-height:1.8;
 }
 
-.drop-list{
-  max-width:850px;
-  margin:60px auto 0;
-  text-align:left;
+.drop-cards{
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-left:1px solid var(--line);
 }
 
-.drop-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:23px 0;
-  border-top:1px solid #222;
+.drop-card{
+  min-height:350px;
+  padding:25px;
+  border-right:1px solid var(--line);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+  transition:.3s;
 }
 
-.drop-row:last-child{
-  border-bottom:1px solid #222;
+.drop-card:hover{background:#0a0a0a}
+
+.drop-number{
+  position:absolute;
+  right:-10px;
+  bottom:-25px;
+  font-size:170px;
+  font-weight:900;
+  line-height:.8;
+  letter-spacing:-.1em;
+  color:#0d0d0d;
 }
 
-.drop-row strong{
-  font-size:11px;
-  letter-spacing:.14em;
+.drop-card-symbol{
+  color:#333;
+  font-family:Georgia,serif;
+  font-size:40px;
 }
 
-.drop-row span{
-  color:#555;
-  font-size:9px;
-  letter-spacing:.15em;
+.drop-card h3{
+  position:relative;
+  margin-top:90px;
+  font-size:15px;
+  letter-spacing:.1em;
 }
 
-/* CONCEPT */
-
-.concept{
-  min-height:70vh;
-  display:flex;
-  align-items:center;
+.drop-card .coming{
+  position:relative;
+  display:inline-block;
+  margin-top:14px;
+  border:1px solid #292929;
+  padding:8px 10px;
+  color:#666;
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:.18em;
 }
 
-.concept-inner{
-  width:100%;
+.drop-card.live-card h3{margin-top:75px}
+
+.drop-card.live-card .coming{
+  color:white;
+  border-color:#555;
 }
+
+/* ================= CONCEPT ================= */
 
 .concept h2{
-  max-width:1050px;
-  font-size:clamp(48px,9vw,120px);
-  line-height:.86;
+  font-size:clamp(50px,9vw,115px);
+  line-height:.83;
   letter-spacing:-.07em;
 }
 
-.concept h2 span{
-  color:#555;
-}
+.concept h2 span{color:#555}
 
-.concept-copy{
-  margin-top:45px;
+.concept p{
   max-width:500px;
+  margin-top:40px;
   color:#777;
-  font-size:13px;
-  line-height:1.8;
+  font-size:12px;
+  line-height:1.9;
 }
 
-/* ABOUT */
+/* ================= ABOUT ================= */
 
 .about-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:80px;
+  gap:90px;
 }
 
 .about h2{
-  font-size:clamp(42px,7vw,80px);
-  line-height:.9;
-  letter-spacing:-.06em;
-}
-
-.about h2 span{
-  color:#666;
-}
-
-.about-text{
-  color:#888;
-  font-size:14px;
-  line-height:1.9;
-  max-width:550px;
-}
-
-.about-text p+p{
-  margin-top:22px;
-}
-
-/* INSTAGRAM */
-
-.instagram{
-  text-align:center;
-}
-
-.instagram h2{
-  font-size:clamp(45px,8vw,95px);
-  letter-spacing:-.07em;
-  line-height:.9;
-}
-
-.instagram h2 span{
-  color:#666;
-}
-
-.instagram p{
-  color:#777;
-  margin:25px auto;
-  font-size:12px;
-}
-
-.ig-btn{
-  display:inline-block;
-  border:1px solid #444;
-  padding:16px 25px;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.18em;
-  transition:.25s;
-}
-
-.ig-btn:hover{
-  background:#fff;
-  color:#000;
-}
-
-/* FAQ */
-
-.faq h2{
-  font-size:clamp(48px,8vw,100px);
+  font-size:clamp(45px,7vw,85px);
   line-height:.87;
   letter-spacing:-.06em;
+}
+
+.about h2 span{color:#666}
+
+.about-text{
+  color:#777;
+  font-size:13px;
+  line-height:1.9;
+}
+
+.about-text p+p{margin-top:20px}
+
+/* ================= INSTAGRAM ================= */
+
+.instagram{text-align:center}
+
+.instagram h2{
+  font-size:clamp(50px,9vw,110px);
+  line-height:.85;
+  letter-spacing:-.07em;
+}
+
+.instagram h2 span{color:#666}
+
+.instagram p{
+  color:#666;
+  margin:25px auto;
+  font-size:11px;
+}
+
+.ig-button{
+  display:inline-block;
+  border:1px solid #444;
+  padding:17px 25px;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.18em;
+}
+
+/* ================= FAQ ================= */
+
+.faq h2{
+  font-size:clamp(50px,9vw,105px);
+  line-height:.84;
+  letter-spacing:-.07em;
   margin:25px 0 60px;
 }
 
-.faq h2 span{
-  color:#666;
-}
+.faq h2 span{color:#666}
 
 .faq-list{
   max-width:900px;
 }
 
-.faq details{
+details{
   border-top:1px solid #292929;
-  padding:25px 0;
+  padding:24px 0;
 }
 
-.faq details:last-child{
-  border-bottom:1px solid #292929;
-}
+details:last-child{border-bottom:1px solid #292929}
 
-.faq summary{
-  list-style:none;
+summary{
   cursor:pointer;
+  list-style:none;
   display:flex;
   justify-content:space-between;
-  gap:30px;
-  font-size:12px;
+  font-size:11px;
   font-weight:800;
-  letter-spacing:.1em;
+  letter-spacing:.12em;
 }
 
-.faq summary::-webkit-details-marker{
-  display:none;
-}
+summary::-webkit-details-marker{display:none}
 
-.faq summary:after{
+summary:after{
   content:"+";
-  color:#666;
+  color:#555;
   font-size:18px;
 }
 
-.faq details[open] summary:after{
+details[open] summary:after{
   content:"−";
-  color:#fff;
+  color:white;
 }
 
-.faq p{
+details p{
   max-width:700px;
   color:#777;
-  font-size:12px;
+  font-size:11px;
   line-height:1.8;
-  margin-top:18px;
+  margin-top:17px;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 footer{
   border-top:1px solid var(--line);
@@ -746,139 +816,110 @@ footer{
 }
 
 .footer-logo{
-  font-size:25px;
+  font-size:24px;
   font-weight:900;
   letter-spacing:.1em;
 }
 
 .footer-links{
   display:flex;
-  gap:25px;
+  flex-wrap:wrap;
+  gap:22px;
 }
 
 .footer-links a{
-  color:#777;
-  font-size:9px;
+  color:#666;
+  font-size:8px;
   font-weight:700;
   letter-spacing:.15em;
 }
 
 .footer-bottom{
-  margin-top:55px;
   display:flex;
   justify-content:space-between;
+  margin-top:50px;
   color:#444;
-  font-size:8px;
-  letter-spacing:.16em;
+  font-size:7px;
+  letter-spacing:.17em;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 
 .modal{
   position:fixed;
   inset:0;
   z-index:2000;
-  background:rgba(0,0,0,.82);
-  backdrop-filter:blur(12px);
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(14px);
   display:none;
   align-items:center;
   justify-content:center;
   padding:20px;
 }
 
-.modal.show{
-  display:flex;
-}
+.modal.show{display:flex}
 
 .modal-box{
-  width:min(470px,100%);
+  position:relative;
+  width:min(460px,100%);
+  padding:30px;
   background:#0b0b0b;
   border:1px solid #333;
-  padding:30px;
-  position:relative;
 }
 
-.close{
+.close-modal{
   position:absolute;
-  right:18px;
-  top:15px;
-  border:0;
+  top:12px;
+  right:15px;
   background:none;
+  border:0;
   color:#777;
-  font-size:22px;
+  font-size:23px;
   cursor:pointer;
 }
 
 .modal-box h3{
+  margin-top:10px;
   font-size:25px;
-  letter-spacing:-.04em;
 }
 
 .modal-box p{
   color:#777;
   font-size:11px;
-  line-height:1.7;
+  line-height:1.8;
   margin:10px 0 25px;
 }
 
 .selected{
   border:1px solid #333;
   padding:15px;
-  color:#aaa;
-  font-size:10px;
-  letter-spacing:.12em;
+  color:#888;
+  font-size:9px;
+  letter-spacing:.15em;
 }
 
 .whatsapp{
   display:block;
-  width:100%;
   text-align:center;
-  margin-top:12px;
+  background:white;
+  color:black;
   padding:17px;
-  background:#fff;
-  color:#000;
-  font-size:10px;
+  margin-top:12px;
+  font-size:9px;
   font-weight:900;
-  letter-spacing:.16em;
+  letter-spacing:.17em;
 }
 
-/* MOBILE */
+/* ================= MOBILE ================= */
 
-@media(max-width:800px){
+@media(max-width:850px){
 
-  .nav-inner{
-    height:64px;
-  }
+  .desktop-links{display:none}
 
-  .nav-links{
-    display:none;
-    position:absolute;
-    top:64px;
-    left:0;
-    right:0;
-    background:#050505;
-    border-bottom:1px solid #222;
-    padding:25px 5%;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:22px;
-  }
-
-  .nav-links.open{
-    display:flex;
-  }
-
-  .menu{
-    display:block;
-  }
+  .menu-trigger{display:block}
 
   .hero{
-    min-height:92svh;
-    padding-bottom:50px;
-  }
-
-  .hero h1{
-    font-size:clamp(54px,16vw,90px);
+    padding-bottom:55px;
   }
 
   .hero-bottom{
@@ -886,7 +927,7 @@ footer{
     align-items:flex-start;
   }
 
-  .product-grid{
+  .product{
     grid-template-columns:1fr;
   }
 
@@ -894,64 +935,90 @@ footer{
     position:static;
   }
 
-  .drop-header{
+  .drop-head{
     flex-direction:column;
     align-items:flex-start;
   }
 
-  .drop-meta{
-    text-align:left;
-  }
-
-  .built-title{
-    letter-spacing:.075em;
-  }
+  .drop-status{text-align:left}
 
   .built-grid{
     grid-template-columns:1fr 1fr;
   }
 
-  .built-card{
-    min-height:160px;
+  .drop-cards{
+    grid-template-columns:1fr 1fr;
   }
 
   .about-grid{
     grid-template-columns:1fr;
-    gap:40px;
+    gap:45px;
   }
 
   .footer-top,
   .footer-bottom{
     flex-direction:column;
-    gap:25px;
   }
 }
 
-@media(max-width:480px){
+@media(max-width:520px){
 
-  .section{
-    padding:90px 0;
+  .nav{height:65px}
+
+  .menu-trigger{
+    width:75px;
+    height:37px;
+  }
+
+  .menu-top{top:82px}
+
+  .menu-bottom{
+    bottom:25px;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .menu-link{
+    font-size:40px;
+    gap:12px;
+  }
+
+  .menu-link small{font-size:7px}
+
+  .hero h1{
+    font-size:18vw;
+  }
+
+  .section{padding:90px 0}
+
+  .built-title{
+    font-size:45px;
+    letter-spacing:.07em;
   }
 
   .built-grid{
     grid-template-columns:1fr;
   }
 
-  .built-title{
-    font-size:46px;
-    letter-spacing:.055em;
+  .drop-cards{
+    grid-template-columns:1fr;
   }
 
-  .sizes{
-    grid-template-columns:repeat(5,1fr);
+  .drop-card{
+    min-height:270px;
   }
 
-  .start{
-    padding:110px 0;
+  .drop-number{
+    font-size:150px;
+  }
+
+  .drop-card h3,
+  .drop-card.live-card h3{
+    margin-top:65px;
   }
 
   .footer-links{
-    flex-wrap:wrap;
+    gap:14px;
   }
 }
 </style>
@@ -963,37 +1030,88 @@ footer{
 <nav class="nav">
   <div class="nav-inner">
 
-    <a href="#top" class="logo">DRIPCTRL®</a>
+    <a class="logo" href="#top">DRIPCTRL®</a>
 
-    <div class="nav-links" id="navLinks">
+    <div class="desktop-links">
       <a href="#drop">DROP 01</a>
       <a href="#built">BUILT DIFFERENT</a>
       <a href="#drops">DROPS</a>
       <a href="#about">ABOUT</a>
       <a href="#faq">FAQ</a>
-      <a href="https://www.instagram.com/dripctrlwear/" target="_blank" class="nav-ig">IG ↗</a>
+      <a href="https://www.instagram.com/dripctrlwear/" target="_blank">IG ↗</a>
     </div>
 
-    <button class="menu" onclick="toggleMenu()">MENU</button>
+    <button class="menu-trigger" id="menuButton" onclick="toggleMenu()" aria-label="Open menu">
+      <span class="menu-word" id="menuWord">MENU</span>
+      <span class="menu-icon" id="menuIcon">— —</span>
+    </button>
 
   </div>
 </nav>
 
+<!-- FULLSCREEN MENU -->
+<div class="mobile-menu" id="mobileMenu">
+
+  <div class="menu-bg-number">04</div>
+
+  <div class="menu-symbol sym1 gothic">✦</div>
+  <div class="menu-symbol sym2 gothic">†</div>
+  <div class="menu-symbol sym3 gothic">✧</div>
+
+  <div class="menu-inner">
+
+    <div class="menu-top">
+      <span>DRIPCTRL® // NAVIGATION</span>
+      <span>CONTROL THE DRIP.</span>
+    </div>
+
+    <div class="menu-links">
+
+      <a class="menu-link" href="#drop" onclick="closeMenu()">
+        <small>01</small> DROP 01
+      </a>
+
+      <a class="menu-link" href="#built" onclick="closeMenu()">
+        <small>02</small> BUILT DIFFERENT
+      </a>
+
+      <a class="menu-link" href="#drops" onclick="closeMenu()">
+        <small>03</small> DROPS
+      </a>
+
+      <a class="menu-link" href="#about" onclick="closeMenu()">
+        <small>04</small> ABOUT
+      </a>
+
+      <a class="menu-link" href="#faq" onclick="closeMenu()">
+        <small>05</small> FAQ
+      </a>
+
+      <a class="menu-link" href="https://www.instagram.com/dripctrlwear/" target="_blank" onclick="closeMenu()">
+        <small>06</small> INSTAGRAM
+      </a>
+
+    </div>
+
+    <div class="menu-bottom">
+      <span>✦ SYSTEM ONLINE</span>
+      <span>INDIA // 2026</span>
+    </div>
+
+  </div>
+</div>
+
 <!-- HERO -->
 <header class="hero" id="top">
 
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
+  <div class="grid"></div>
+  <div class="hero-circle"></div>
 
   <div class="container hero-content">
 
-    <div class="hero-top">
-      <div class="signal">SYSTEM // DRIPCTRL®</div>
-
-      <div class="status">
-        <span class="dot"></span>
-        ONLINE
-      </div>
+    <div class="hero-meta">
+      <span>DRIPCTRL® // SYSTEM 001</span>
+      <span class="live"><i></i> ONLINE</span>
     </div>
 
     <h1>
@@ -1005,13 +1123,12 @@ footer{
 
       <p class="hero-copy">
         <strong>DRIPCTRL®</strong> is an independent streetwear label
-        built around concepts, silhouettes and details that don't need
-        permission.
+        built around concepts, silhouettes and details.
         <br><br>
-        DROP 01 IS LIVE.
+        NO SIGNAL — DROP 01 / 04.
       </p>
 
-      <a href="#drop" class="hero-btn">
+      <a class="hero-button" href="#drop">
         ENTER DROP 01 →
       </a>
 
@@ -1028,43 +1145,42 @@ footer{
     <span>NO SIGNAL</span>
     <span>DROP 01 / 04</span>
     <span>MADE TO ORDER</span>
+    <span>✦</span>
     <span>DRIPCTRL®</span>
     <span>CONTROL THE DRIP</span>
     <span>NO SIGNAL</span>
     <span>DROP 01 / 04</span>
     <span>MADE TO ORDER</span>
+    <span>✦</span>
   </div>
 </div>
 
 <!-- DROP 01 -->
 <section class="section" id="drop">
-
   <div class="container">
 
-    <div class="drop-header">
+    <div class="drop-head">
 
       <div>
         <div class="label">DROP 01 / 04</div>
-
         <h2 class="drop-title">
-          NO<br>
-          <span>SIGNAL.</span>
+          NO<br><span>SIGNAL.</span>
         </h2>
       </div>
 
-      <div class="drop-meta">
+      <div class="drop-status">
+        LIVE NOW<br>
         LIMITED CONCEPT DROP<br>
-        OVERSIZED FIT<br>
         INDIA / 2026
       </div>
 
     </div>
 
-    <div class="product-grid">
+    <div class="product">
 
-      <div class="product-images">
-        <img src="no-signal-mockup-01.png" alt="DRIPCTRL NO SIGNAL Tee">
-        <img src="no-signal-mockup-02.png" alt="DRIPCTRL NO SIGNAL Tee details">
+      <div class="images">
+        <img src="no-signal-mockup-01.png" alt="NO SIGNAL Tee">
+        <img src="no-signal-mockup-02.png" alt="NO SIGNAL Tee details">
       </div>
 
       <div class="product-info">
@@ -1079,11 +1195,10 @@ footer{
 
         <div class="price">₹799</div>
 
-        <p class="product-description">
-          A heavyweight oversized silhouette built around the idea of
-          disconnecting from everything that doesn't matter.
+        <p class="desc">
+          A heavyweight oversized silhouette built around the idea
+          of disconnecting from everything that doesn't matter.
           Washed black. Distressed graphics. Technical details.
-          Nothing unnecessary.
         </p>
 
         <div class="specs">
@@ -1110,126 +1225,536 @@ footer{
 
         </div>
 
-        <div class="size-title">SELECT SIZE</div>
+        <div 
+      <div class="label">02 // THE DETAILS</div>
 
-        <div class="sizes">
-          <button class="size" onclick="selectSize(this)">S</button>
-          <button class="size" onclick="selectSize(this)">M</button>
-          <button class="size" onclick="selectSize(this)">L</button>
-          <button class="size" onclick="selectSize(this)">XL</button>
-          <button class="size" onclick="selectSize(this)">XXL</button>
-        </div>
+<div class="built-heading">
 
-        <button class="order" onclick="openModal()">
-          ORDER NO SIGNAL →
-        </button>
+  <div class="built-symbol gothic">† ✦ †</div>
 
-        <div class="shipping">
-          PAN-INDIA SHIPPING // MADE TO ORDER
-        </div>
+  <h2 class="built-title">
+    BUILT<br><span>DIFFERENT.</span>
+  </h2>
 
-      </div>
+  <p class="built-sub">
+    Every detail has a reason. The garment isn't just a canvas
+    for a logo — the fit, fabric, graphics and finishing all
+    belong to the concept.
+  </p>
 
-    </div>
+</div>
 
+<div class="built-grid">
+
+  <div class="built-card">
+    <div class="card-gothic gothic">✦</div>
+    <div class="card-num">01</div>
+    <h3>FABRIC</h3>
+    <p>Heavyweight 240 GSM construction for a structured feel.</p>
   </div>
 
-</section>
-
-<!-- BUILT DIFFERENT -->
-<section class="section" id="built">
-
-  <div class="container">
-
-    <div class="label">02 // THE DETAILS</div>
-
-    <h2 class="built-title">
-      BUILT<br>
-      <span>DIFFERENT.</span>
-    </h2>
-
-    <div class="built-grid">
-
-      <div class="built-card">
-        <div class="card-num">01</div>
-        <h3>FABRIC</h3>
-        <p>Heavyweight 240 GSM construction designed for structure and presence.</p>
-      </div>
-
-      <div class="built-card">
-        <div class="card-num">02</div>
-        <h3>SILHOUETTE</h3>
-        <p>Oversized proportions with a relaxed drop-shoulder profile.</p>
-      </div>
-
-      <div class="built-card">
-        <div class="card-num">03</div>
-        <h3>WASH</h3>
-        <p>Washed black finish with controlled vintage character.</p>
-      </div>
-
-      <div class="built-card">
-        <div class="card-num">04</div>
-        <h3>GRAPHICS</h3>
-        <p>Concept-driven graphics instead of simply putting a logo everywhere.</p>
-      </div>
-
-      <div class="built-card">
-        <div class="card-num">05</div>
-        <h3>PRINT</h3>
-        <p>Detailed monochrome artwork with distressed technical elements.</p>
-      </div>
-
-      <div class="built-card">
-        <div class="card-num">06</div>
-        <h3>CONSTRUCTION</h3>
-        <p>Clean finishing and a silhouette designed to actually wear well.</p>
-      </div>
-
-      <div class="built-card">
-        <div class="card-num">07</div>
-        <h3>LABELS</h3>
-        <p>DRIPCTRL branding details keep the garment feeling like a real label.</p>
-      </div>
-
-      <div class="built-card">
-        <div class="card-num">08</div>
-        <h3>PRODUCTION</h3>
-        <p>Made to order so the first drop doesn't depend on unnecessary stock.</p>
-      </div>
-
-    </div>
-
+  <div class="built-card">
+    <div class="card-gothic gothic">†</div>
+    <div class="card-num">02</div>
+    <h3>SILHOUETTE</h3>
+    <p>Oversized proportions with a relaxed drop shoulder.</p>
   </div>
 
-</section>
+  <div class="built-card">
+    <div class="card-gothic gothic">✧</div>
+    <div class="card-num">03</div>
+    <h3>WASH</h3>
+    <p>Washed black finish with controlled vintage character.</p>
+  </div>
 
-<!-- ONLY THE START -->
-<section class="start" id="drops">
+  <div class="built-card">
+    <div class="card-gothic gothic">†</div>
+    <div class="card-num">04</div>
+    <h3>GRAPHICS</h3>
+    <p>Concept graphics instead of simply printing a logo.</p>
+  </div>
+
+  <div class="built-card">
+    <div class="card-gothic gothic">✦</div>
+    <div class="card-num">05</div>
+    <h3>PRINT</h3>
+    <p>Detailed monochrome artwork with distressed elements.</p>
+  </div>
+
+  <div class="built-card">
+    <div class="card-gothic gothic">✧</div>
+    <div class="card-num">06</div>
+    <h3>CONSTRUCTION</h3>
+    <p>Clean finishing with an intentional oversized shape.</p>
+  </div>
+
+  <div class="built-card">
+    <div class="card-gothic gothic">†</div>
+    <div class="card-num">07</div>
+    <h3>LABELS</h3>
+    <p>DRIPCTRL branding details throughout the garment.</p>
+  </div>
+
+  <div class="built-card">
+    <div class="card-gothic gothic">✦</div>
+    <div class="card-num">08</div>
+    <h3>PRODUCTION</h3>
+    <p>Made to order to avoid unnecessary inventory.</p>
+  </div>
+
+</div>
+
+
+<!-- ALL DROPS -->
+
+<section class="section drops-section" id="drops">
 
   <div class="container">
 
     <div class="label">03 // THE ROADMAP</div>
 
+    <h2 class="drops-title">
+      FOUR DROPS.<br>
+      <span>ONE IDENTITY.</span>
+    </h2>
+
+    <p class="drops-intro">
+      NO SIGNAL is only the beginning. Four drops are planned —
+      each with its own concept, graphics and energy.
+    </p>
+
+    <div class="drop-cards">
+
+      <div class="drop-card live-card">
+        <div class="drop-card-symbol gothic">✦</div>
+        <div class="drop-number">01</div>
+        <h3>NO SIGNAL</h3>
+        <div class="coming">LIVE NOW</div>
+      </div>
+
+      <div class="drop-card">
+        <div class="drop-card-symbol gothic">†</div>
+        <div class="drop-number">02</div>
+        <h3>DROP 02</h3>
+        <div class="coming">COMING SOON</div>
+      </div>
+
+      <div class="drop-card">
+        <div class="drop-card-symbol gothic">✧</div>
+        <div class="drop-number">03</div>
+        <h3>DROP 03</h3>
+        <div class="coming">COMING SOON</div>
+      </div>
+
+      <div class="drop-card">
+        <div class="drop-card-symbol gothic">†</div>
+        <div class="drop-number">04</div>
+        <h3>DROP 04</h3>
+        <div class="coming">COMING SOON</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CONCEPT -->
+
+<section class="section concept">
+
+  <div class="container">
+
+    <div class="label">04 // THE IDEA</div>
+
     <h2>
-      THIS IS<br>
-      <span>ONLY THE START.</span>
+      OFFLINE.<br>
+      UNBOTHERED.<br>
+      <span>NO SIGNAL.</span>
     </h2>
 
     <p>
-      NO SIGNAL is only the first chapter.
-      Four drops. Four concepts.
-      One identity.
-      More DRIPCTRL is already on the way.
+      In a world where everything wants your attention,
+      DRIPCTRL is about knowing when to disconnect.
+      No forced trends. No unnecessary noise.
+      Just the drip.
     </p>
 
-    <div class="drop-list">
+  </div>
 
-      <div class="drop-row">
-        <strong>DROP 01 — NO SIGNAL</strong>
-        <span>LIVE / 2026</span>
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="section" id="about">
+
+  <div class="container">
+
+    <div class="label">05 // DRIPCTRL®</div>
+
+    <div class="about-grid">
+
+      <h2>
+        NOT JUST<br>
+        A LOGO.<br>
+        <span>A LANGUAGE.</span>
+      </h2>
+
+      <div class="about-text">
+
+        <p>
+          DRIPCTRL® is an independent streetwear project from India,
+          built around the idea that clothing should have an identity
+          beyond a name printed across the chest.
+        </p>
+
+        <p>
+          Every drop begins with a concept. The graphics, fit,
+          colour and details are built around it.
+        </p>
+
+        <p>
+          Drop 01 is only the beginning.
+        </p>
+
       </div>
 
-      <div class="drop-row">
-        <strong>DROP 02</strong>
-   
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- INSTAGRAM -->
+
+<section class="section instagram">
+
+  <div class="container">
+
+    <div class="label">06 // SOCIAL</div>
+
+    <h2>
+      SEE THE<br>
+      <span>DRIP.</span>
+    </h2>
+
+    <p>
+      Edits. Behind the scenes. Drops. Everything DRIPCTRL.
+    </p>
+
+    <a
+      href="https://www.instagram.com/dripctrlwear/"
+      target="_blank"
+      class="ig-button"
+    >
+      @DRIPCTRLWEAR ↗
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section class="section" id="faq">
+
+  <div class="container">
+
+    <div class="label">07 // FAQ</div>
+
+    <h2 class="faq-title">
+      QUESTIONS.<br>
+      <span>ANSWERED.</span>
+    </h2>
+
+    <div class="faq-list">
+
+      <details>
+        <summary>WHAT IS DRIPCTRL?</summary>
+        <p>
+          DRIPCTRL® is an independent Indian streetwear label
+          focused on concept-driven drops, oversized silhouettes
+          and detailed graphics.
+        </p>
+      </details>
+
+      <details>
+        <summary>WHAT IS DROP 01?</summary>
+        <p>
+          Drop 01 is NO SIGNAL — the first of four planned drops.
+        </p>
+      </details>
+
+      <details>
+        <summary>WHAT IS THE FIT?</summary>
+        <p>
+          NO SIGNAL uses an oversized, relaxed, drop-shoulder silhouette.
+        </p>
+      </details>
+
+      <details>
+        <summary>WHAT IS THE FABRIC?</summary>
+        <p>
+          The garment is designed around a heavyweight 240 GSM construction.
+        </p>
+      </details>
+
+      <details>
+        <summary>WHAT SIZES ARE AVAILABLE?</summary>
+        <p>
+          S, M, L, XL and XXL.
+        </p>
+      </details>
+
+      <details>
+        <summary>DO YOU SHIP ACROSS INDIA?</summary>
+        <p>
+          Yes. DRIPCTRL currently offers Pan-India shipping.
+        </p>
+      </details>
+
+      <details>
+        <summary>HOW DO I ORDER?</summary>
+        <p>
+          Select your size and tap ORDER NO SIGNAL.
+          Your order will continue through WhatsApp.
+        </p>
+      </details>
+
+      <details>
+        <summary>WHEN ARE THE NEXT DROPS?</summary>
+        <p>
+          Drop 02, Drop 03 and Drop 04 are coming soon.
+          Follow @dripctrlwear for announcements.
+        </p>
+      </details>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="container">
+
+    <div class="footer-top">
+
+      <div class="footer-logo">
+        DRIPCTRL®
+      </div>
+
+      <div class="footer-links">
+
+        <a href="#drop">DROP 01</a>
+
+        <a href="#drops">DROPS</a>
+
+        <a href="#built">BUILT DIFFERENT</a>
+
+        <a href="#about">ABOUT</a>
+
+        <a href="#faq">FAQ</a>
+
+        <a
+          href="https://www.instagram.com/dripctrlwear/"
+          target="_blank"
+        >
+          INSTAGRAM
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>CONTROL THE DRIP.</span>
+
+      <span>© 2026 DRIPCTRL®</span>
+
+      <span>INDIA</span>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- ORDER MODAL -->
+
+<div class="modal" id="orderModal">
+
+  <div class="modal-box">
+
+    <button
+      class="close-modal"
+      onclick="closeModal()"
+    >
+      ×
+    </button>
+
+    <div class="label">
+      DRIPCTRL® / ORDER
+    </div>
+
+    <h3>
+      NO SIGNAL TEE
+    </h3>
+
+    <p>
+      Continue your order through WhatsApp.
+      Your selected size will be included automatically.
+    </p>
+
+    <div
+      class="selected"
+      id="selectedSize"
+    >
+      SIZE: PLEASE SELECT A SIZE
+    </div>
+
+    <a
+      href="#"
+      id="whatsappLink"
+      class="whatsapp"
+      target="_blank"
+    >
+      CONTINUE ON WHATSAPP →
+    </a>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* MENU */
+
+const menu = document.getElementById("mobileMenu");
+
+const menuWord =
+  document.getElementById("menuWord");
+
+const menuIcon =
+  document.getElementById("menuIcon");
+
+function toggleMenu(){
+
+  if(menu.classList.contains("open")){
+
+    closeMenu();
+
+  }else{
+
+    openMenu();
+
+  }
+
+}
+
+function openMenu(){
+
+  menu.classList.add("open");
+
+  document.body.classList.add("menu-open");
+
+  menuWord.textContent = "CLOSE";
+
+  menuIcon.textContent = "×";
+
+}
+
+function closeMenu(){
+
+  menu.classList.remove("open");
+
+  document.body.classList.remove("menu-open");
+
+  menuWord.textContent = "MENU";
+
+  menuIcon.textContent = "— —";
+
+}
+
+document.addEventListener("keydown",function(e){
+
+  if(e.key === "Escape"){
+    closeMenu();
+  }
+
+});
+
+
+/* SIZE */
+
+let selectedSize = "";
+
+function selectSize(button){
+
+  document
+    .querySelectorAll(".size")
+    .forEach(function(item){
+
+      item.classList.remove("active");
+
+    });
+
+  button.classList.add("active");
+
+  selectedSize =
+    button.textContent.trim();
+
+}
+
+
+/* ORDER */
+
+function openModal(){
+
+  if(!selectedSize){
+
+    alert("Please select a size first.");
+
+    return;
+
+  }
+
+  document.getElementById("selectedSize")
+    .textContent =
+    "SIZE: " + selectedSize;
+
+  const message =
+    "Hi DRIPCTRL! I want to order the NO SIGNAL TEE.%0A%0A" +
+    "Size: " + selectedSize + "%0A" +
+    "Price: ₹799";
+
+  document.getElementById("whatsappLink")
+    .href =
+    "https://wa.me/919812668851?text=" +
+    message;
+
+  document.getElementById("orderModal")
+    .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+  document.getElementById("orderModal")
+    .classList.remove("show");
+
+}
+
+</script>
